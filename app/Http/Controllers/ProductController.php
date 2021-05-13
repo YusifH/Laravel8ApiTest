@@ -1,18 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Like;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
- 
+        $data = Product::all();
+        return view('product', ['data' => $data]);
         return response()->json([
             'success' => true,
-            'data' => $products
+            'data' => $data
         ]);
     }
     public function show($id)
@@ -32,7 +35,23 @@ class ProductController extends Controller
             'success' => 'Mehsul silindi'
         ]);
     }
-   /*  public function update(Request $request, $id)
+
+
+    public function like(Request $request, $id)
+    {
+        $product_liked = Like::find($id);
+        $product_id = $id;
+        $like_count = Like::where('product_id', '=', $product_id)->count();
+            $product_like = new Like();
+            $product_like->product_id = $product_id;
+            $product_like->save();
+            return response()->json([
+                'success' => 'Mehsul like edildi'
+            ]);
+      
+    }
+    /*  public function update(Request $request, $id)
+   
     {
         $product = Product::find($id);
         $updated = $product->fill($request->all())->save();

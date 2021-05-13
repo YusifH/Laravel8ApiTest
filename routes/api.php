@@ -20,3 +20,5 @@ Route::get('products/{id}', [ProductController::class, 'show']);
 Route::post('products/create', [ProductController::class, 'store']);
 Route::put('products/sil/{id}', [ProductController::class, 'destroy']);
 Route::get('products/edit/{id}', [ProductController::class, 'update']);
+
+Route::post('products/like/{id}', [ProductController::class, 'like'])->name('product.post'); 
